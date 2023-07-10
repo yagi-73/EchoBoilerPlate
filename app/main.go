@@ -1,30 +1,27 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+  "github.com/labstack/echo/v4"
+  "github.com/labstack/echo/v4/middleware"
+  "net/http"
 )
 
-var e = createMux()
-
 func main() {
-	e.GET("/", articleIndex)
+  // Echo instance
+  e := echo.New()
 
-	e.Logger.Fatal(e.Start(":8080"))
+  // Middleware
+  e.Use(middleware.Logger())
+  e.Use(middleware.Recover())
+
+  // Routes
+  e.GET("/", hello)
+
+  // Start server
+  e.Logger.Fatal(e.Start(":1323"))
 }
 
-func createMux() *echo.Echo {
-	e := echo.New()
-
-	e.Use(middleware.Recover())
-	e.Use(middleware.Logger())
-	e.Use(middleware.Gzip())
-
-	return e
-}
-
-func articleIndex(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, World!")
+// Handler
+func hello(c echo.Context) error {
+  return c.String(http.StatusOK, "Hello, World!")
 }
