@@ -10,7 +10,7 @@ RUN go mod init main \
 ENV CGO_ENABLED=0 \
   GOOS=linux \
   GOARCH=amd64
-EXPOSE 8080
+EXPOSE 1323
 
 
 CMD ["go", "run", "main.go"]
